@@ -23,7 +23,7 @@ namespace ProcessLib
         public static string TestMethod3(string path)
         {
             ProcessStartInfo psi = new ProcessStartInfo("cmd.exe");
-            string PathV8Unpack = @"G:\_WorkD\Обработки\V8Unpack20\V8Unpack20\bin\V8Unpack.exe";
+            string PathV8Unpack = @"G:\_WorkD\Обработки\V8Unpack20\V8Unpack20\bin\V8Unpack.exe111111111";
             string EpfFilePath = @"G:\_WorkD\Обработки\CDev\ВнешняяОбработка1.epf";
             //string TxtFilePath = @"G:\_WorkD\Обработки\ВнешняяОбработка1.txt";
             string DirTxtFilePath = @"G:\_WorkD\Обработки\CDev";
