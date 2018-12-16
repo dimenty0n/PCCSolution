@@ -46,7 +46,6 @@ namespace ProcessLib
             string[] moduleNames,
             string licenceEditDir)
         {
-            //string directory = AppDomain.CurrentDomain.BaseDirectory;
             //Выгрузка файлов конфигурации
             DumpConfigFiles(enterprisePath, dBaseSettings, cfFileDir);
 
@@ -452,7 +451,6 @@ namespace ProcessLib
             string subStringRegion = "#Область";
             string subStringEndRegion = "#КонецОбласти";
 
-            int listRegionIndex = -1;
             int lastListRegionIndex = -1;
 
             while (true)
@@ -495,17 +493,21 @@ namespace ProcessLib
                         linesNew.Add(lineNew);
 
                         lastListRegionIndex++;
-                        listRegionIndex = lastListRegionIndex;
 
                         startIndex = endIndexNameRegion + 1;
                     }
                     else
                     {
-                        RegionContainer lineNew = linesNew[listRegionIndex];
-                        lineNew.EndIndex = indexOfSubStringEndRegion;
-                        //linesNew.Insert(listRegionIndex, lineNew);
-                        listRegionIndex--;
-                        startIndex = indexOfSubStringEndRegion + 13;
+                        for (int listRegionIndex = lastListRegionIndex; listRegionIndex >= 0; listRegionIndex--)
+                        {
+                            RegionContainer lineNew = linesNew[listRegionIndex];
+                            if (lineNew.EndIndex == 0)
+                            {
+                                lineNew.EndIndex = indexOfSubStringEndRegion;
+                                startIndex = indexOfSubStringEndRegion + 13;
+                                break;
+                            }
+                        }
                     }
 
                 }
@@ -517,11 +519,16 @@ namespace ProcessLib
                 }
                 else if (indexOfSubStringEndRegion >= 0)
                 {
-                    RegionContainer lineNew = linesNew[listRegionIndex];
-                    lineNew.EndIndex = indexOfSubStringEndRegion;
-                    //linesNew.Insert(listRegionIndex, lineNew);
-                    listRegionIndex--;
-                    startIndex = indexOfSubStringEndRegion + 13;
+                    for (int listRegionIndex = lastListRegionIndex; listRegionIndex >= 0; listRegionIndex--)
+                    {
+                        RegionContainer lineNew = linesNew[listRegionIndex];
+                        if (lineNew.EndIndex == 0)
+                        {
+                            lineNew.EndIndex = indexOfSubStringEndRegion;
+                            startIndex = indexOfSubStringEndRegion + 13;
+                            break;
+                        }
+                    }
                 }
                 else//Либо ничего не нашли, либо дошли до конца - прерываем цикл
                 {
